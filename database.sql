@@ -1,8 +1,4 @@
 -- Base de données pour le sondage digital
-CREATE DATABASE IF NOT EXISTS sondage_digital CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-USE sondage_digital;
-
 -- Table pour stocker les réponses
 CREATE TABLE IF NOT EXISTS responses (
     id INT AUTO_INCREMENT PRIMARY KEY,
