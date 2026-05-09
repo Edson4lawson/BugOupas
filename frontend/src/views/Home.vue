@@ -6,18 +6,8 @@
     <div class="absolute bottom-[-10%] right-[20%] w-[500px] h-[500px] bg-pink-400/20 rounded-full blur-[100px] animate-float pointer-events-none z-0" style="animation-delay: -2s;"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
-      <!-- Header -->
-      <header class="flex justify-end mb-12" data-aos="fade-down" data-aos-duration="800">
-        <router-link
-          to="/admin"
-          class="group flex items-center gap-3 pl-5 pr-2 py-2 rounded-full bg-white/50 hover:bg-white/80 backdrop-blur-md border border-white/60 shadow-sm transition-all duration-300"
-        >
-          <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600 transition-colors">Espace Partenaire</span>
-          <span class="w-8 h-8 rounded-full bg-indigo-500 text-white shadow-lg shadow-indigo-500/30 flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
-             <span class="iconify" data-icon="solar:shield-user-bold-duotone"></span>
-          </span>
-        </router-link>
-      </header>
+      <!-- Espace Admin masqué (Accessible via /admin/login) -->
+      <div class="h-12"></div>
 
       <!-- Hero Section -->
       <div class="text-center mb-20 relative">
