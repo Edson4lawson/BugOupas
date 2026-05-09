@@ -1,0 +1,10 @@
+# robots.txt pour Sondage Digital Bénin
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://votre-domaine.vercel.app/sitemap.xml
+
+# Disallow admin pages
+User-agent: *
+Disallow: /admin

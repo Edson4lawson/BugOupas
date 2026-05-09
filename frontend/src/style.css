@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font-brand {
+    font-family: 'Righteous', system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 min-h-screen font-sans text-slate-800 antialiased overflow-x-hidden selection:bg-indigo-500 selection:text-white;
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+      radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    background-color: #0f172a; /* Fallback dark theme base for depth */
+    color: #f8fafc; /* Switch to light text for better contrast on dark/rich backgrounds if we go dark, but let's stick to a light/airy premium feel */
+  }
+  
+  /* Overriding body for a Light Premium feel as requested */
+  body.light-theme {
+    background-color: #f8fafc;
+    background-image: 
+      radial-gradient(at 40% 20%, rgba(167, 139, 250, 0.1) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(236, 72, 153, 0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+     color: #1e293b;
+  }
+}
+
+/* Force light theme by default for now, can be toggled */
+body {
+    background-color: #f8fafc;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.8), transparent 25%),
+      radial-gradient(at 40% 20%, rgba(167, 139, 250, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, rgba(99, 102, 241, 0.15) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: #0f172a;
+}
+
+@layer components {
+  /* Boutons Ultra Premium */
+  .btn-primary {
+    @apply relative overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 
+    text-white font-medium py-3.5 px-8 rounded-xl
+    shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40
+    transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300
+    flex items-center justify-center gap-2.5 z-10;
+  }
+
+  /* Effet de brillance au survol - Sans 'group' pour éviter les erreurs */
+  .btn-primary::before {
+    content: '';
+    @apply absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent
+    transition-all duration-500;
+    transform: skewX(-15deg);
+  }
+
+  .btn-primary:hover::before {
+    @apply left-[100%];
+  }
+
+  .btn-secondary {
+    @apply bg-white/80 backdrop-blur-xl text-slate-700 font-medium py-3.5 px-8 rounded-xl
+    border border-white shadow-sm hover:shadow-md hover:bg-white
+    transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300
+    flex items-center justify-center gap-2.5;
+  }
+
+  /* Inputs Modernes */
+  .input-field {
+    @apply w-full px-5 py-4 bg-white/50 backdrop-blur-md border border-slate-200/60 rounded-xl
+    text-slate-800 placeholder-slate-400 font-medium
+    focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white
+    transition-all duration-300 outline-none hover:border-slate-300 shadow-sm shadow-slate-200/20;
+  }
+
+  /* Glassmorphism Card V2 */
+  .card {
+    @apply bg-white/70 backdrop-blur-2xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]
+    border border-white/60 p-8 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-500
+    relative overflow-hidden;
+  }
+  
+  /* Lueur interne subtile */
+  .card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/80 to-transparent opacity-50 pointer-events-none;
+  }
+  
+  /* Contenu de la card au dessus de la lueur */
+  .card > * {
+    @apply relative z-10;
+  }
+
+  .label {
+    @apply block text-sm font-bold text-slate-600 mb-2.5 tracking-wide uppercase text-[11px];
+  }
+}
+
+/* Animations Fluides */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(2deg); }
+  67% { transform: translateY(5px) rotate(-1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Texte Gradient */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 animate-gradient-x;
+}
+
+@keyframes gradient-x {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-x {
+    background-size: 200% 200%;
+    animation: gradient-x 15s ease infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300/50 rounded-full hover:bg-slate-400/80 transition-colors;
+}
+
+/* Transitions globales */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+}
