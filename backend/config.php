@@ -33,7 +33,7 @@ if ($databaseUrl) {
 }
 
 // Mot de passe admin : admin123
-$adminPasswordHash = getenv('ADMIN_PASSWORD_HASH') ?: '$2y$12$EKiQlKF1exAocgg4CsxGeu8ajvQVQ96vuWOSDPfMNK5NiNUfTnyHy';
+$adminPasswordHash = getenv('ADMIN_PASSWORD_HASH') ?: '$2y$12$TO0aLoTfQtCK.iMoAUS2LO.qzAW9YyWqPfJ2D9r2KYfx8yUbu2v3y';
 
 // Configuration des constantes
 define('DB_TYPE', $dbType);
