@@ -295,7 +295,11 @@ const submitForm = async () => {
     }
   } catch (error) {
     console.error('Erreur soumission:', error)
-    feedback.message = error.response?.data?.message || 'Une erreur est survenue lors de l\'envoi.'
+    if (!error.response) {
+      feedback.message = "Erreur réseau : Impossible de contacter le serveur. Vérifiez que l'URL de l'API est correcte."
+    } else {
+      feedback.message = error.response.data?.message || "Une erreur est survenue sur le serveur lors de l'envoi."
+    }
     feedback.isError = true
   } finally {
     isSubmitting.value = false

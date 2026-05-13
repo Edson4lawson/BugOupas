@@ -64,6 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
  * @return PDO
  */
 function getDBConnection() {
+    static $pdo = null;
+    if ($pdo !== null) return $pdo;
+
     try {
         if (DB_TYPE === 'postgresql') {
             // Connexion PostgreSQL
@@ -80,6 +83,10 @@ function getDBConnection() {
         ];
         
         $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+        
+        // Initialisation automatique de la table si elle n'existe pas
+        initDatabase($pdo);
+        
         return $pdo;
     } catch (PDOException $e) {
         http_response_code(500);
@@ -88,6 +95,46 @@ function getDBConnection() {
             'message' => 'Erreur de connexion à la base de données: ' . $e->getMessage()
         ]);
         exit();
+    }
+}
+
+/**
+ * Initialise la base de données (création des tables)
+ * @param PDO $pdo
+ */
+function initDatabase($pdo) {
+    $dbType = DB_TYPE;
+    
+    if ($dbType === 'postgresql') {
+        $sql = "
+            CREATE TABLE IF NOT EXISTS responses (
+                id SERIAL PRIMARY KEY,
+                problem TEXT NOT NULL,
+                domain VARCHAR(100) NOT NULL,
+                frustration INTEGER NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE INDEX IF NOT EXISTS idx_domain ON responses (domain);
+        ";
+    } else {
+        $sql = "
+            CREATE TABLE IF NOT EXISTS responses (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                problem TEXT NOT NULL,
+                domain VARCHAR(100) NOT NULL,
+                frustration INT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            CREATE INDEX idx_domain ON responses (domain);
+        ";
+        // Pour MySQL, CREATE INDEX IF NOT EXISTS n'est pas supporté avant 8.0.x
+        // On enveloppe dans un try-catch au cas où
+    }
+    
+    try {
+        $pdo->exec($sql);
+    } catch (Exception $e) {
+        // On ignore si l'index existe déjà
     }
 }
 
