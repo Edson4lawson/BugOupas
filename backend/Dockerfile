@@ -12,8 +12,8 @@ RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql mysqli
 # Activation du module rewrite pour Apache
 RUN a2enmod rewrite
 
-# Copie du code source
-COPY . /var/www/html/
+# Copie du code source du backend uniquement
+COPY ./backend /var/www/html/
 
 # Configuration des permissions
 RUN chown -R www-data:www-data /var/www/html
