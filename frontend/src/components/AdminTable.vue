@@ -136,9 +136,9 @@
                 #{{ response.id }}
               </td>
               <td class="px-6 py-5 text-sm text-slate-700">
-                <p class="line-clamp-2 md:line-clamp-none font-medium text-balance">{{ response.problem }}</p>
+                <p class="line-clamp-2 md:line-clamp-none font-medium text-balance">{{ decodeHTMLEntities(response.problem) }}</p>
                 <p v-if="response.custom_domain" class="text-xs text-slate-400 mt-1 italic">
-                  Précision: {{ response.custom_domain }}
+                  Précision: {{ decodeHTMLEntities(response.custom_domain) }}
                 </p>
               </td>
               <td class="px-6 py-5 whitespace-nowrap">
@@ -251,6 +251,14 @@ const formatDate = (dateString) => {
     hour: '2-digit',
     minute: '2-digit'
   }).format(date)
+}
+
+// Fonction pour décoder les entités HTML (ex: &#039; -> ')
+const decodeHTMLEntities = (text) => {
+  if (!text) return ''
+  const textArea = document.createElement('textarea')
+  textArea.innerHTML = text
+  return textArea.value
 }
 
 // Appliquer les filtres
